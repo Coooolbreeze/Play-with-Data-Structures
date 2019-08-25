@@ -23,11 +23,11 @@ public class LinkedList<E> {
         }
     }
 
-    private Node head;
+    private Node dummyHead;
     private int size;
 
     public LinkedList() {
-        head = null;
+        dummyHead = new Node();
         size = 0;
     }
 
@@ -50,16 +50,6 @@ public class LinkedList<E> {
     }
 
     /**
-     * 在链表头添加一个新元素
-     *
-     * @param e
-     */
-    public void addFirst(E e) {
-        head = new Node(e, head);
-        size++;
-    }
-
-    /**
      * 在链表index位置插入一个新元素
      *
      * @param index
@@ -70,16 +60,21 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("Add Failed. Illegal index.");
         }
 
-        if (index == 0) {
-            addFirst(e);
-        } else {
-            Node prev = head;
-            for (int i = 0; i < index - 1; i++) {
-                prev = prev.next;
-            }
-            prev.next = new Node(e, prev.next);
-            size++;
+        Node prev = dummyHead;
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
         }
+        prev.next = new Node(e, prev.next);
+        size++;
+    }
+
+    /**
+     * 在链表头添加一个新元素
+     *
+     * @param e
+     */
+    public void addFirst(E e) {
+        add(0, e);
     }
 
     /**
