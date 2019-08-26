@@ -1,15 +1,39 @@
+import java.util.Random;
+
 public class Main {
 
-    public static void main(String[] args) {
-        ArrayStack<Integer> stack = new ArrayStack<>();
+    /**
+     * 测试使用q运行opCount个push和pop操作所需的时间，单位：秒
+     *
+     * @param q
+     * @param opCount
+     * @return
+     */
+    private static double testStack(Stack<Integer> q, int opCount) {
+        long startTime = System.nanoTime();
 
-        for (int i = 0; i < 5; i++) {
-            stack.push(i);
-            System.out.println(stack);
+        Random random = new Random();
+        for (int i = 0; i < opCount; i++) {
+            q.push(random.nextInt(Integer.MAX_VALUE));
+        }
+        for (int i = 0; i < opCount; i++) {
+            q.pop();
         }
 
-        System.out.println(stack.pop());
+        long endTime = System.nanoTime();
 
-        System.out.println(stack);
+        return (endTime - startTime) / 1000000000.0;
+    }
+
+    public static void main(String[] args) {
+        int opCount = 1000000;
+
+        ArrayStack<Integer> arrayQueue = new ArrayStack<>();
+        double time1 = testStack(arrayQueue, opCount);
+        System.out.println("ArrayStack, time: " + time1 + " s");
+
+        LinkedListStack<Integer> loopQueue = new LinkedListStack<>();
+        double time2 = testStack(loopQueue, opCount);
+        System.out.println("LinkedListStack, time: " + time2 + " s");
     }
 }
