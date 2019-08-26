@@ -85,4 +85,134 @@ public class LinkedList<E> {
     public void addLast(E e) {
         add(size, e);
     }
+
+    /**
+     * 获取链表中index位置的元素
+     *
+     * @param index
+     * @return
+     */
+    public E get(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("Get Failed. Illegal index.");
+        }
+
+        Node cur = dummyHead.next;
+        for (int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+
+        return cur.e;
+    }
+
+    /**
+     * 获取链表中第一个元素
+     *
+     * @return
+     */
+    public E getFirst() {
+        return get(0);
+    }
+
+    /**
+     * 获取链表中最后一个元素
+     *
+     * @return
+     */
+    public E getLast() {
+        return get(size);
+    }
+
+    /**
+     * 修改链表中第index个位置的元素
+     *
+     * @param index
+     * @param e
+     */
+    public void set(int index, E e) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("Set Failed. Illegal index.");
+        }
+
+        Node cur = dummyHead.next;
+        for (int i = 0; i < index; i++) {
+            cur = cur.next;
+        }
+        cur.e = e;
+    }
+
+    /**
+     * 从链表中删除index位置的元素，返回被删除的元素
+     *
+     * @param index
+     * @return
+     */
+    public E remove(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("Remove Failed. Illegal index.");
+        }
+
+        Node prev = dummyHead;
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+
+        Node retNode = prev.next;
+        prev.next = retNode.next;
+        retNode.next = null;
+        size--;
+
+        return retNode.e;
+    }
+
+    /**
+     * 删除链表中第一个元素
+     *
+     * @return
+     */
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    /**
+     * 删除链表中最后一个元素
+     *
+     * @return
+     */
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
+    /**
+     * 查找链表中是否含有元素e
+     *
+     * @param e
+     * @return
+     */
+    public boolean contains(E e) {
+        Node cur = dummyHead.next;
+
+        while (cur != null) {
+            if (cur.e.equals(e)) {
+                return true;
+            }
+            cur = cur.next;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+
+        Node cur = dummyHead.next;
+        while (cur != null) {
+            res.append(cur + "->");
+            cur = cur.next;
+        }
+        res.append("NULL");
+
+        return res.toString();
+    }
 }
